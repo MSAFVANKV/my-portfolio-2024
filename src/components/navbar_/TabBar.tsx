@@ -94,7 +94,7 @@ const DATA = {
 
 export function TabBar() {
   return (
-    <div className="relative flex h-[100px] w-full flex-col items-center justify-center overflow-hidden  bg-background">
+    <div className="relative flex h-[100px] w-full flex-col items-center justify-center overflow-hidden  bg-">
       {/* <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
         Dock
       </span> */}
