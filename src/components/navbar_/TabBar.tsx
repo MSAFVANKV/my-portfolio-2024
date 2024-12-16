@@ -29,15 +29,27 @@ const Icons = {
       />
     </svg>
   ),
-  x: (props: IconProps) => (
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <title>X</title>
-      <path
-        fill="currentColor"
-        d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-      />
+//   x: (props: IconProps) => (
+//     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+//       <title>X</title>
+//       <path
+//         fill="currentColor"
+//         d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
+//       />
+//     </svg>
+//   ),
+instagram: (props: IconProps) => (
+    <svg
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      {...props}
+    >
+      <title>Instagram</title>
+      <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.062 1.366-.336 2.633-1.311 3.608-.975.975-2.242 1.249-3.608 1.311-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.366-.062-2.633-.336-3.608-1.311-.975-.975-1.249-2.242-1.311-3.608C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.849c.062-1.366.336-2.633 1.311-3.608.975-.975 2.242-1.249 3.608-1.311 1.265-.058 1.645-.07 4.849-.07zm0-2.163C8.741 0 8.332.014 7.052.072 5.79.131 4.533.355 3.435 1.452 2.337 2.55 2.113 3.806 2.054 5.068 1.996 6.348 1.982 6.757 1.982 12s.014 5.652.072 6.932c.059 1.262.283 2.518 1.381 3.616 1.098 1.097 2.355 1.321 3.616 1.381 1.28.058 1.689.072 6.932.072s5.652-.014 6.932-.072c1.262-.059 2.518-.283 3.616-1.381 1.097-1.098 1.321-2.355 1.381-3.616.058-1.28.072-1.689.072-6.932s-.014-5.652-.072-6.932c-.059-1.262-.283-2.518-1.381-3.616-1.098-1.097-2.355-1.321-3.616-1.381C15.652.014 15.243 0 12 0zm0 5.838a6.162 6.162 0 110 12.324 6.162 6.162 0 010-12.324zm0 10.162a4 4 0 100-8 4 4 0 000 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z" />
     </svg>
   ),
+  
   youtube: (props: IconProps) => (
     <svg
       width="32px"
@@ -78,10 +90,10 @@ const DATA = {
         url: "https://www.linkedin.com/in/muhammed-safvan-kv-648388250/",
         icon: Icons.linkedin,
       },
-      X: {
-        name: "X",
+      Instagram: {
+        name: "Instagram",
         url: "https://www.instagram.com/m_safvan_kv/",
-        icon: Icons.x,
+        icon: Icons.instagram,
       },
       email: {
         name: "Send Email",
@@ -104,31 +116,33 @@ export function TabBar() {
             <DockIcon key={item.label}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <ScrollLink
-                    to={item.href}
-                    smooth={true}
-                    offset={0} // No vertical offset
-                    duration={500}
-                    aria-label={item.label}
-                    onClick={() => {
-                      const target = document.getElementById(item.href); // Get the target section
-                      const container =
-                        document.querySelector(".scroll-container"); // Reference your scroll container
-                      if (target && container) {
-                        const position = target.offsetLeft; // Calculate horizontal position
-                        container.scrollTo({
-                          left: position,
-                          behavior: "smooth", // Smooth horizontal scroll
-                        });
-                      }
-                    }}
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-12 rounded-full"
-                    )}
-                  >
-                    <item.icon className="size-4" />
-                  </ScrollLink>
+                  <span>
+                    <ScrollLink
+                      to={item.href}
+                      smooth={true}
+                      offset={0} // No vertical offset
+                      duration={500}
+                      aria-label={item.label}
+                      onClick={() => {
+                        const target = document.getElementById(item.href); // Get the target section
+                        const container =
+                          document.querySelector(".scroll-container"); // Reference your scroll container
+                        if (target && container) {
+                          const position = target.offsetLeft; // Calculate horizontal position
+                          container.scrollTo({
+                            left: position,
+                            behavior: "smooth", // Smooth horizontal scroll
+                          });
+                        }
+                      }}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "icon" }),
+                        "size-12 rounded-full"
+                      )}
+                    >
+                      <item.icon className="size-4" />
+                    </ScrollLink>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{item.label}</p>
@@ -141,17 +155,20 @@ export function TabBar() {
             <DockIcon key={name}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link
-                    to={social.url}
-                    aria-label={social.name}
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-12 rounded-full"
-                    )}
-                  >
-                    <social.icon className="size-4" />
-                  </Link>
+                  <span>
+                    <Link
+                      to={social.url}
+                      aria-label={social.name}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "icon" }),
+                        "size-12 rounded-full"
+                      )}
+                    >
+                      <social.icon className="size-4" />
+                    </Link>
+                  </span>
                 </TooltipTrigger>
+
                 <TooltipContent>
                   <p>{name}</p>
                 </TooltipContent>
