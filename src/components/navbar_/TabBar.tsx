@@ -76,7 +76,7 @@ instagram: (props: IconProps) => (
 const DATA = {
   navbar: [
     { href: "home", icon: HomeIcon, label: "Home" },
-    { href: "works", icon: PencilIcon, label: "Blog" },
+    { href: "journey", icon: PencilIcon, label: "Journey" },
   ],
   contact: {
     social: {

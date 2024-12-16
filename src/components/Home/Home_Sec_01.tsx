@@ -5,14 +5,14 @@ type Props = {};
 
 export default function HomeSec01({}: Props) {
   return (
-    <div className="min-h-[calc(100vh-7rem)] bg-blue- flex md:flex-row flex-col justify-between">
-      <div className="md:w-1/2 flex flex-col gap-7 justify-center">
+    <div className="md:h-[calc(100vh-7rem)] h-[calc(100vh-10rem)] scrollbar-none overflow-y-auto flex md:flex-row flex-col justify-between">
+      <div className="md:w-1/2 flex flex-col md:gap-6 gap-3 justify-center md:items-start items-center">
         <HyperText
           className="text-4xl font-bold text-black dark:text-white"
           text="Muhammed Safvan Kv"
           duration={500}
         />
-        <span className="text-xs">
+        <span className="text-xs md:text-justify text-center">
           I am a passionate Web Developer with a strong focus on creating
           user-friendly and efficient digital experiences. With expertise in
           modern web technologies, I specialize in building responsive, dynamic,

@@ -98,7 +98,7 @@ export default function Home({}: Props) {
             onClick={handleClickPrev}
             className="bg-gray-500 text-white h-10 w-10 rounded-full"
           >
-            Prev
+            P
           </button>
         )}
       </div>

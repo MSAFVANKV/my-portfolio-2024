@@ -61,7 +61,7 @@ export default function Journey({}: Props) {
   ];
 
   return (
-    <div className="w-full max-h-[calc(100vh-7rem)] overflow-y-auto ">
+    <div className="w-full md:h-[calc(100vh-7rem)] h-[calc(100vh-10rem)] scrollbar-none overflow-y-auto ">
       <div className="">
         <HyperText
           className="text-4xl font-bold text-black dark:text-white"
