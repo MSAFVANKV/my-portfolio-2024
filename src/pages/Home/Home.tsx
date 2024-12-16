@@ -1,7 +1,7 @@
 import HomeSec01 from "../../components/Home/Home_Sec_01";
 import Works from "../../components/Home/Works";
 import Journey from "../../components/Home/Journey";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 type Props = {};
 
@@ -15,7 +15,7 @@ export default function Home({}: Props) {
   const [currentSection, setCurrentSection] = useState(ids.home);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleClickNext = () => {
+  const handleClickNext = useCallback(() => {
     const sections = Object.values(ids);
     const currentIndex = sections.indexOf(currentSection);
     const nextSection = sections[currentIndex + 1];
@@ -27,9 +27,9 @@ export default function Home({}: Props) {
         setCurrentSection(nextSection); // Update the current section
       }
     }
-  };
+  }, [currentSection, ids]);
 
-  const handleClickPrev = () => {
+  const handleClickPrev = useCallback(() => {
     const sections = Object.values(ids);
     const currentIndex = sections.indexOf(currentSection);
     const prevSection = sections[currentIndex - 1];
@@ -41,15 +41,32 @@ export default function Home({}: Props) {
         setCurrentSection(prevSection); // Update the current section
       }
     }
-  };
+  }, [currentSection, ids]);
 
-  const handleSectionChange = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setCurrentSection(entry.target.id); // Update the current section when the target is in view
-      }
-    });
-  };
+  // const handleClickPrev = () => {
+  //   const sections = Object.values(ids);
+  //   const currentIndex = sections.indexOf(currentSection);
+  //   const prevSection = sections[currentIndex - 1];
+
+  //   if (prevSection && scrollContainerRef.current) {
+  //     const prevElement = document.getElementById(prevSection);
+  //     if (prevElement) {
+  //       prevElement.scrollIntoView({ behavior: "smooth" });
+  //       setCurrentSection(prevSection); // Update the current section
+  //     }
+  //   }
+  // };
+
+  const handleSectionChange = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setCurrentSection(entry.target.id); // Update the current section when the target is in view
+        }
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     // Set up IntersectionObserver to track section visibility
