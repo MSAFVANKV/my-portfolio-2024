@@ -96,7 +96,7 @@ export default function Home({}: Props) {
         {currentSection !== ids.home && (
           <button
             onClick={handleClickPrev}
-            className="bg-gray-500 text-white h-10 w-10 rounded-full"
+            className="bg-neutral-500  h-10 w-10 rounded-full"
           >
             P
           </button>
@@ -108,7 +108,7 @@ export default function Home({}: Props) {
         {currentSection !== ids.works && (
           <button
             onClick={handleClickNext}
-            className="bg-black text-white h-10 w-10 rounded-full"
+            className="bg-foreground dark:text-black text-white   h-10 w-10 rounded-full"
           >
             N
           </button>

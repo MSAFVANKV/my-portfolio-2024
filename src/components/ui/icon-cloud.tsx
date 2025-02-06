@@ -1,7 +1,8 @@
 "use client";
 
+import { useTheme } from "@/provider/theme-provider";
 import { useEffect, useMemo, useState } from "react";
-import { useTheme } from "next-themes";
+
 import {
   Cloud,
   fetchSimpleIcons,

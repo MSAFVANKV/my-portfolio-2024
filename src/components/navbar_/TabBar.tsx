@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from "lucide-react";
+import { CalendarIcon, Download, HomeIcon, MailIcon, PencilIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -75,8 +75,10 @@ instagram: (props: IconProps) => (
 
 const DATA = {
   navbar: [
-    { href: "home", icon: HomeIcon, label: "Home" },
-    { href: "journey", icon: PencilIcon, label: "Journey" },
+    { href: "home", icon: HomeIcon, label: "Home", download:false, },
+    { href: "journey", icon: PencilIcon, label: "Journey", download:false, },
+    { href: "/resume/Muhammed Safvan Kv_resume_2025.pdf", icon: Download, label: "Resume", download:true, },
+
   ],
   contact: {
     social: {
@@ -116,8 +118,22 @@ export function TabBar() {
             <DockIcon key={item.label}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span>
-                    <ScrollLink
+                  <div>
+                    {
+                      item.download ? (
+                        <a
+                        href={item.href}
+                        download
+                        className={cn(
+                          buttonVariants({ variant: "ghost", size: "icon" }),
+                          "size-12 rounded-full"
+                        )}
+                        aria-label={item.label}
+                      >
+                        <item.icon className="size-4" />
+                      </a>
+                      ):(
+                          <ScrollLink
                       to={item.href}
                       smooth={true}
                       offset={0} // No vertical offset
@@ -142,7 +158,10 @@ export function TabBar() {
                     >
                       <item.icon className="size-4" />
                     </ScrollLink>
-                  </span>
+                      )
+                    }
+                  
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{item.label}</p>

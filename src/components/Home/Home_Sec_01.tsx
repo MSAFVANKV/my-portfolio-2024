@@ -8,7 +8,7 @@ export default function HomeSec01({}: Props) {
     <div className="md:h-[calc(100vh-7rem)] h-[calc(100vh-10rem)] scrollbar-none overflow-y-auto flex md:flex-row flex-col justify-between">
       <div className="md:w-1/2 flex flex-col md:gap-6 gap-3 justify-center md:items-start items-center">
         <HyperText
-          className="text-4xl font-bold text-black dark:text-white"
+          className="text-4xl font-bold "
           text="Muhammed Safvan Kv"
           duration={500}
         />

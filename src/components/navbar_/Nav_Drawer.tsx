@@ -10,27 +10,46 @@ import {
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
+import { useTheme } from "@/provider/theme-provider";
 
 function NavDrawer() {
   const [dateTime, setDateTime] = useState({ date: "", time: "" });
   const [battery, setBattery] = useState<number | null>(null);
+  const { setTheme, theme } = useTheme()
 
   const drawerItems = [
     {
       id: 1,
       title: "Home",
       icon: "solar:home-angle-outline",
+      action:()=>{}
     },
     {
       id: 2,
       title: "Projects",
       icon: "si:projects-line",
+      action:() => {}
+
     },
     {
       id: 3,
       title: "About",
       icon: "mdi:about-circle-outline",
+      action:() => {}
+
     },
+    {
+      id: 4,
+      title: "Dark",
+      icon: theme === "dark"?  "noto:full-moon":"twemoji:sun",
+      action:() =>{
+        if(theme === "dark"){
+          setTheme("light")
+        }else{
+          setTheme("dark")}
+        }
+       
+    }
   ];
 
   // Update date and time
@@ -93,7 +112,7 @@ function NavDrawer() {
       <DrawerTrigger>
         <Icon icon="arcticons:drawer-alt-2" fontSize={25} />
       </DrawerTrigger>
-      <DrawerContent className="bg-white/10 max-w-screen-2xl mx-auto p-4 gap-6">
+      <DrawerContent className="bg-background/10 text-foreground max-w-screen-2xl mx-auto p-4 gap-6">
         <DrawerHeader className="text-center flex justify-between items-center">
          <div className="">
          <p className="sm:text-lg text-sm text-white font-semibold text-start">{dateTime.date}</p>
@@ -119,12 +138,13 @@ function NavDrawer() {
             </div>
           )}
         </DrawerHeader>
-        <DrawerDescription className="grid md:grid-cols-5 grid-cols-3 gap-4 w-[80%] h-16 mx-auto">
+        <DrawerDescription className="grid md:grid-cols-5 grid-cols-3 gap-4 w-[40%] h-16 mx-auto">
           {drawerItems.map((item) => (
             <Toggle
               aria-label="Toggle bold"
               className="h-full bg-black/40"
               key={item.id}
+              onClick={item.action}
             >
               <Icon icon={item.icon} fontSize={25} />
             </Toggle>

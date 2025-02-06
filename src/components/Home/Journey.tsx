@@ -64,7 +64,7 @@ export default function Journey({}: Props) {
     <div className="w-full md:h-[calc(100vh-7rem)] h-[calc(100vh-10rem)] scrollbar-none overflow-y-auto ">
       <div className="">
         <HyperText
-          className="text-4xl font-bold text-black dark:text-white"
+          className="text-4xl font-bold "
           text="My Life Journey"
           duration={500}
         />
