@@ -1,0 +1,4 @@
+ "homepage": "https://MSAFVANKV.github.io/my-portfolio-2024",
+
+  "predeploy":"npm run build",
+    "deploy": "gh-pages -d dist",

@@ -1,13 +1,12 @@
 {
-  "homepage": "https://MSAFVANKV.github.io/my-portfolio-2024",
+ 
   "name": "portfolio-safvan",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predeploy":"npm run build",
-    "deploy": "gh-pages -d dist",
+   
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
