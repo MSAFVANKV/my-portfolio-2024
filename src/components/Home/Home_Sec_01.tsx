@@ -21,9 +21,9 @@ export default function HomeSec01({}: Props) {
 
         <div className="bg-[#D3B8AA] overflow-hidden rounded-full w-[250px] h-[250px] shadow border ">
           <img
-            src="/WhatsApp Image 2024-12-06 at 16.57.36.png"
+            src="/pr_img_02.png"
             alt=""
-            className="object-cover"
+            className="object-cover w-full h-full scale-150"
             draggable={false}
           />
         </div>

@@ -45,7 +45,7 @@ export default function Journey({}: Props) {
     {
       id: 5,
       title: "SELF STACK HUB LLP",
-      description: "a life change to technical word",
+      description: "a life change to technical world",
       icon: "school:school-outline",
       year: "2023-2024",
       isTraining: false,

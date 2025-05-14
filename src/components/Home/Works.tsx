@@ -19,12 +19,21 @@ export default function Works({}: Props) {
       id: 2,
       title: "uracca.com",
       description: "This is the ecommerce platform for fashion trends.",
-      image: "/projects/proj02.svg",
+      image: "/projects/www.uracca.com.png",
+      // image: "/projects/proj02.svg",
       domain: "https://uracca.com",
       isFeatured: false,
     },
     {
       id: 3,
+      title: "uracca.com",
+      description: "This is the ecommerce platform for fashion trends.",
+      image: "/projects/www.uracca.com_products_03.png",
+      domain: "https://admin.uracca.com",
+      isFeatured: false,
+    },
+    {
+      id: 4,
       title: "ayaboo.com",
       description: "This is a b2b platform for business related fashions.",
       image: "/projects/proj03.svg",
@@ -32,16 +41,24 @@ export default function Works({}: Props) {
       isFeatured: false,
     },
     {
-      id: 4,
+      id: 5,
+      title: "ayaboo.com",
+      description: "This is the main page for ayaboo.com after register",
+      image: "/projects/proj04.svg",
+      domain: "https://ayaboo.com",
+      isFeatured: false,
+    },
+    {
+      id: 6,
       title: "admin.ayaboo.com",
       description: "This is a admin panel for ayaboo team.",
-      image: "/projects/proj04.svg",
+      image: "/projects/proj07.jpeg",
       domain: "https://admin.ayaboo.com",
       isFeatured: false,
     },
   ];
   return (
-    <div className="min-h-[calc(100vh-7rem)] flex  flex-col ">
+    <div className="min-h-[calc(100vh-7rem)] w-full flex  flex-col ">
       <div className="">
         <HyperText
           className="text-4xl font-bold text-black dark:text-white"
@@ -51,14 +68,14 @@ export default function Works({}: Props) {
       </div>
       <Separator orientation="horizontal" className="w-full " />
 
-      <div className="grid xl:grid-cols-4 grid-cols-2 my-10 gap-3 mx-2">
+      <div className="grid xl:grid-cols-3 grid-cols-2 my-10 gap-3 mx-2">
         {Projects.map((project,index) => (
           <div
           key={index}
-            className=" h-[200px] min-w-[250px] p-4 animated-bg  overflow-hidden shadow-md group rounded-lg cursor-pointer relative"
+            className=" h-[300px] min-w-[250px] p-4 animated-bg overflow-hidden shadow-md group rounded-lg cursor-pointer relative"
             style={{
               backgroundImage: `url(${project.image})`,
-            
+              
             }}
           >
             <div className="flex flex-col text-center items-center justify-center absolute top-0 left-0 w-full h-full  bg-foreground/50 text-white dark:text-black backdrop-blur-sm -translate-y-full group-hover:translate-y-0 duration-300 transition-all">
