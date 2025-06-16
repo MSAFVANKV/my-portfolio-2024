@@ -77,7 +77,7 @@ const DATA = {
   navbar: [
     { href: "home", icon: HomeIcon, label: "Home", download:false, },
     { href: "journey", icon: PencilIcon, label: "Journey", download:false, },
-    { href: "/resume/Muhammed Safvan Kv_02.pdf", icon: Download, label: "Resume", download:true, },
+    { href: "/resume/Muhammed_Safvan Kv_Protfolio_03.pdf", icon: Download, label: "Resume", download:true, },
 
   ],
   contact: {
