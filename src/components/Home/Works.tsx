@@ -52,7 +52,7 @@ export default function Works({}: Props) {
       id: 6,
       title: "admin.ayaboo.com",
       description: "This is a admin panel for ayaboo team.",
-      image: "/projects/proj07.jpeg",
+      image: "/projects/proj08.png",
       domain: "https://admin.ayaboo.com",
       isFeatured: false,
     },
@@ -75,9 +75,13 @@ export default function Works({}: Props) {
             className=" h-[300px] min-w-[250px] p-4 animated-bg overflow-hidden shadow-md group rounded-lg cursor-pointer relative"
             style={{
               backgroundImage: `url(${project.image})`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
               
             }}
           >
+            
             <div className="flex flex-col text-center items-center justify-center absolute top-0 left-0 w-full h-full  bg-foreground/50 text-white dark:text-black backdrop-blur-sm -translate-y-full group-hover:translate-y-0 duration-300 transition-all">
               <Link to={project.domain} target="_blank" className="text-xs underline">{project.title}</Link>
               <span className="text-sm break-words">{project.description}</span>
