@@ -2,9 +2,9 @@ import HyperText from "@/components/ui/hyper-text";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 
-type Props = {};
+// type Props = {};
 
-const ContactPage = (props: Props) => {
+const ContactPage = () => {
   const [email, setUserEmail] = useState("");
   return (
     <div className=" h-full w-full">
