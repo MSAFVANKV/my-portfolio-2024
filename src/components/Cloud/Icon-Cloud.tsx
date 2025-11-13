@@ -22,7 +22,7 @@ const slugs = [
 //   "testinglibrary",
 //   "jest",
 //   "cypress",
-  "docker",
+  // "docker",
   "git",
   "jira",
   "github",

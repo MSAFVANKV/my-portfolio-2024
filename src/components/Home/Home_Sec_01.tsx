@@ -5,7 +5,8 @@ type Props = {};
 
 export default function HomeSec01({}: Props) {
   return (
-    <div className="md:h-[calc(100vh-7rem)] h-[calc(100vh-10rem)] scrollbar-none overflow-y-auto flex md:flex-row flex-col justify-between">
+    <div className="h-full scrollbar-none overflow-y-auto flex md:flex-row flex-col justify-between">
+      {/* md:h-[calc(100vh-7rem)] bg-bl h-[calc(100vh-10rem)] */}
       <div className="md:w-1/2 flex flex-col md:gap-6 gap-3 justify-center md:items-start items-center">
         <HyperText
           className="text-4xl font-bold "
@@ -28,7 +29,7 @@ export default function HomeSec01({}: Props) {
           />
         </div>
       </div>
-      <div className="md:w-1/2 w-full">
+      <div className="md:w-1/2 w-full my-auto">
         <IconCloudSection />
       </div>
     </div>

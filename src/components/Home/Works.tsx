@@ -56,9 +56,25 @@ export default function Works({}: Props) {
       domain: "https://admin.ayaboo.com",
       isFeatured: false,
     },
+    {
+      id: 7,
+      title: "affiliate",
+      description: "An affiliate project for influence's",
+      image: "/projects/Affiliate-Landing-Page.png",
+      domain: "http://working.com",
+      isFeatured: false,
+    },
+    {
+      id: 8,
+      title: "affiliate Dashboard",
+      description: "An affiliate project for influence's",
+      image: "/projects/Affiliate-Dashboard.png",
+      domain: "http://working.com",
+      isFeatured: false,
+    },
   ];
   return (
-    <div className="min-h-[calc(100vh-7rem)] w-full flex  flex-col ">
+    <div className="min-h-[calc(100vh-7rem)] pb-10 w-full flex  flex-col ">
       <div className="">
         <HyperText
           className="text-4xl font-bold text-black dark:text-white"
@@ -68,11 +84,11 @@ export default function Works({}: Props) {
       </div>
       <Separator orientation="horizontal" className="w-full " />
 
-      <div className="grid xl:grid-cols-3 grid-cols-2 my-10 gap-3 mx-2">
+      <div className="grid xl:grid-cols-3 sm:grid-cols-2 my-10 gap-3 mx-2 pb-10">
         {Projects.map((project,index) => (
           <div
           key={index}
-            className=" h-[300px] min-w-[250px] p-4 animated-bg overflow-hidden shadow-md group rounded-lg cursor-pointer relative"
+            className=" h-[300px] min-w-[250px] p-4 animated-bg  sm:animate-scrollBackground overflow-hidden shadow-md group rounded-lg cursor-pointer relative"
             style={{
               backgroundImage: `url(${project.image})`,
               backgroundPosition: "center",
@@ -82,7 +98,8 @@ export default function Works({}: Props) {
             }}
           >
             
-            <div className="flex flex-col text-center items-center justify-center absolute top-0 left-0 w-full h-full  bg-foreground/50 text-white dark:text-black backdrop-blur-sm -translate-y-full group-hover:translate-y-0 duration-300 transition-all">
+            <div className="flex flex-col text-center items-center sm:justify-center justify-end sm:pb-0 pb-5 absolute top-0 left-0 w-full h-full  bg-foreground/50 text-white dark:text-black 
+            backdrop-blur-sm sm:-translate-y-full -translate-y-1/2 sm:group-hover:translate-y-0 duration-300 transition-all">
               <Link to={project.domain} target="_blank" className="text-xs underline">{project.title}</Link>
               <span className="text-sm break-words">{project.description}</span>
 

@@ -38,7 +38,7 @@ export default function Navbar({}: Props) {
   };
 
   return (
-    <header className="flex justify-between items-center section_container">
+    <header className="flex justify-between items-center fixed left-0 right-0 top-0 z-50 section_container">
       <nav className="py-8 flex justify-between w-full items-center">
         {/* Logo Section */}
         <div

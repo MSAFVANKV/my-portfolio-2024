@@ -83,7 +83,7 @@ body::-webkit-scrollbar {
 /* ------ */
 /* ....... */
 .section_container {
-  @apply max-w-screen-xl  2xl:px-24 xl:px-20 md:px-14 sm:px-10 px-5 mx-auto;
+  @apply max-w-screen-xl  2xl:px-24 xl:px-20 md:px-14 sm:px-10 px-2 mx-auto;
 }
 
 /* /==== animation css for project section cards image */
@@ -101,7 +101,7 @@ body::-webkit-scrollbar {
   background-repeat: no-repeat;
   animation: scrollBackground 30s linear infinite alternate;
 } */
-@keyframes scrollBackground {
+/* @keyframes scrollBackground {
   0% {
     background-position: center top;
   }
@@ -117,4 +117,4 @@ body::-webkit-scrollbar {
   background-size: cover;
   background-repeat: no-repeat;
   animation: scrollBackground 30s ease-in-out infinite;
-}
+} */

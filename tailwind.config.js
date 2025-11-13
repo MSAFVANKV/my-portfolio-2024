@@ -55,6 +55,18 @@ const config ={
           5: "hsl(var(--chart-5))",
         },
       },
+      keyframes: {
+        scrollBackground: {
+          "0%": { backgroundPosition: "center top" },
+          "50%": { backgroundPosition: "center bottom" },
+          "100%": { backgroundPosition: "center top" },
+        },
+      },
+
+      // ✅ Register animation utility name
+      animation: {
+        scrollBackground: "scrollBackground 30s ease-in-out infinite",
+      },
     },
   },
   plugins: [
