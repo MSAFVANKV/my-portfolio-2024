@@ -6,7 +6,7 @@ import ContactPage from "../contact/page";
 
 type Props = {};
 
-export default function Home({}: Props) {
+export default function HomeV01({}: Props) {
   const ids = {
     home: "home",
     journey: "journey",

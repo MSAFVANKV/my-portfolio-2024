@@ -1,27 +1,28 @@
-
 import { Outlet } from "react-router-dom";
 
-import './App.css'
-import Navbar from './components/navbar_/Navbar';
-import { TabBar } from './components/navbar_/TabBar';
+import "./App.css";
+import NavbarMainContainer from "./components/partials/navbar_/navbar-main";
+import TabBarMainContainer from "./components/partials/navbar_/tabbar-main-container";
+import { AuthProvider } from "./provider/context/AuthContext";
 
 function App() {
-
-
   return (
     <>
       <div className="w-screen scrollbar-none">
-        <Navbar/>
-        <main className='section_container '>
-          <Outlet />
-        </main>
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2">
-          <TabBar />
-        </div>
-      
+        {/* NAVBAR SECTION */}
+        <AuthProvider>
+          <NavbarMainContainer />
+
+          {/* MAIN CONTENT SECTION */}
+          <main className="section_container ">
+            <Outlet />
+          </main>
+          {/* tab bar section */}
+          <TabBarMainContainer />
+        </AuthProvider>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,9 +1,9 @@
-import  { useState } from "react";
+import { useState } from "react";
 import NavDrawer from "./Nav_Drawer";
 
 type Props = {};
 
-export default function Navbar({}: Props) {
+export default function NavbarV01({}: Props) {
   const fullName = "Safvan"; // The full name
   const [displayedName, setDisplayedName] = useState(fullName[0]); // Initially show the first letter
   const [isHovered, setIsHovered] = useState(false); // Track hover state
@@ -55,7 +55,9 @@ export default function Navbar({}: Props) {
         >
           <span
             className={`transition-all duration-500   flex items-center rounded-full ${
-              isHovered ? "inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent" : "text-white"
+              isHovered
+                ? "inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent"
+                : "text-white"
             }`}
           >
             {displayedName}
@@ -64,7 +66,7 @@ export default function Navbar({}: Props) {
 
         {/* Pages Section */}
         <div className="">
-            <NavDrawer />
+          <NavDrawer />
         </div>
       </nav>
     </header>
