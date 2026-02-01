@@ -52,7 +52,7 @@ export type SearchResultItem = {
   description: string;
 };
 
-const base_url = import.meta.env.VITE_BASE_URL ?? "http://localhost:3001";
+// const base_url = import.meta.env.VITE_BASE_URL ?? "http://localhost:3001";
 
 export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   // ================= ABOUT =================
