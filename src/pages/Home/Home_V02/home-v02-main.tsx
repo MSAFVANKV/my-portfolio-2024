@@ -1,4 +1,4 @@
-import SearchBarV02 from "./Search-Bar-V02";
+import SearchBarV02 from "../../../components/Home/home-v02/Search-Bar-V02";
 import { useAuth } from "@/provider/context/AuthContext";
 import AuthorizedHomePage_V02 from "./authorized-pages/authorized-home-page-v02";
 

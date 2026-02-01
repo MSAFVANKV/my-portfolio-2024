@@ -41,8 +41,8 @@ const AuthorizeSecLeft_V02 = ({ SEARCH_RESULTS }: Props) => {
     setSearchParams(params);
   };
 
-  //   const isExternal = (url: string) =>
-  //     url.startsWith("http") && !url.includes("localhost:3001");
+  const isExternal = (url: string) =>
+    url.startsWith("http") && !url.includes("localhost:3001");
 
   //   const handleLinkClick = (url: string) => {
   //     if (isExternal(url)) {
@@ -60,29 +60,42 @@ const AuthorizeSecLeft_V02 = ({ SEARCH_RESULTS }: Props) => {
       </p>
 
       <div className="flex flex-col gap-8">
-        {paginatedResults.map((item, index) => (
-          <div key={index} className="flex flex-col gap-1 border-b pb-3">
-            <span className="text-sm text-gray-500 truncate">{item.url}</span>
+        {paginatedResults.map((item, index) => {
+          const external = isExternal(item.url);
+          return (
+            <div key={index} className="flex flex-col gap-1 border-b pb-3">
+              <span className="text-sm text-gray-500 truncate">{item.url}</span>
 
-            <Link
-              to={item.url}
-              target="_blank"
-              className="text-xl text-blue-600 hover:underline"
-            >
-              {item.title}
-            </Link>
-            {/* <button
+              {external ? (
+                <Link
+                  to={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xl text-blue-600 hover:underline"
+                >
+                  {item.title}
+                </Link>
+              ) : (
+                <Link
+                  to={item.url.replace("http://localhost:3001", "")}
+                  className="text-xl text-blue-600 hover:underline"
+                >
+                  {item.title}
+                </Link>
+              )}
+              {/* <button
               onClick={() => handleLinkClick(item.url)}
               className="text-left text-xl text-blue-600 hover:underline"
             >
               {item.title}
             </button> */}
 
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {item.description}
-            </p>
-          </div>
-        ))}
+              <p className="text-sm text-gray-700 leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          );
+        })}
 
         {results.length === 0 && (
           <p className="text-gray-500">No results found.</p>

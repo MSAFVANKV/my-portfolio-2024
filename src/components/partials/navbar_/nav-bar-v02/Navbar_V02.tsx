@@ -3,7 +3,7 @@ import { CgMenuGridO } from "react-icons/cg";
 
 import AvatarMenu_V02 from "../../avatar/v02/AvatarMenu_V02";
 import { useAuth } from "@/provider/context/AuthContext";
-import SearchBarV02 from "@/pages/Home/Home_V02/Search-Bar-V02";
+import SearchBarV02 from "@/components/Home/home-v02/Search-Bar-V02";
 import { cn } from "@/lib/utils";
 import SubNavbarV02 from "./sub-navbar";
 

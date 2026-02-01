@@ -52,12 +52,14 @@ export type SearchResultItem = {
   description: string;
 };
 
+const base_url = import.meta.env.VITE_BASE_URL ?? "http://localhost:3001";
+
 export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   // ================= ABOUT =================
   about: [
     {
       title: "Muhammed Safvan Kv - Full Stack Developer",
-      url: "http://localhost:3001/about",
+      url: `${base_url}/about`,
       description:
         "Full Stack Developer specializing in React, Next.js, Node.js, MongoDB, Tailwind CSS and scalable web applications.",
     },
@@ -67,19 +69,19 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   skills: [
     {
       title: "Technical Skills - MERN Stack Developer",
-      url: "http://localhost:3001/skills",
+      url: `${base_url}/skills`,
       description:
         "React, Next.js, Node.js, Express.js, MongoDB, Tailwind CSS, TypeScript, Redux Toolkit, React Query, MUI, Radix UI.",
     },
     {
       title: "Frontend Technologies",
-      url: "http://localhost:3001/skills/frontend",
+      url: `${base_url}/skills/frontend`,
       description:
         "React.js, Next.js, HTML5, CSS3, Tailwind CSS, Bootstrap, ShadCN UI, Material UI.",
     },
     {
       title: "Backend Technologies",
-      url: "http://localhost:3001/skills/backend",
+      url: `${base_url}/skills/backend`,
       description:
         "Node.js, Express.js, MongoDB, REST APIs, Authentication (NextAuth), Razorpay integration.",
     },
@@ -117,19 +119,19 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   experience: [
     {
       title: "Full Stack Developer - Haash Technologies Pvt Ltd",
-      url: "http://localhost:3001/experience",
+      url: `${base_url}/experience`,
       description:
         "Working as Full Stack Developer (2024 - Present) handling React, Next.js, Node.js and frontend/backend architecture.",
     },
     {
       title: "Internship - Self Stack (Hilite Business Park)",
-      url: "http://localhost:3001/experience/internship",
+      url: `${base_url}/experience/internship`,
       description:
         "MERN Stack Internship (2023 - 2024) working with React.js, Node.js, MongoDB and Express.",
     },
     {
       title: "Tool Maker - Tesin Products Pvt Ltd",
-      url: "http://localhost:3001/experience/non-it",
+      url: `${base_url}/experience/non-it`,
       description:
         "Worked as Tool Maker and Quality Engineer (2022 - 2023) before transitioning into IT industry.",
     },
@@ -139,13 +141,13 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   education: [
     {
       title: "MERN Full Stack Development - Self Stack Kerala",
-      url: "http://localhost:3001/education",
+      url: `${base_url}/education`,
       description:
         "Completed MERN Full Stack Development course (2023 - 2024) at Hilite Business Park, Kerala.",
     },
     {
       title: "Tool and Die Engineering - AWH Engineering College",
-      url: "http://localhost:3001/education/engineering",
+      url: "${base_url}/education/engineering",
       description:
         "Completed Tool and Die Engineering in 2022 before entering software development career.",
     },
@@ -155,7 +157,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   tools: [
     {
       title: "Development Tools & Libraries",
-      url: "http://localhost:3001/tools",
+      url: `${base_url}/tools`,
       description:
         "Git, GitHub, Vite, ShadCN UI, Material UI, Redux Toolkit, React Hook Form, Yup, Axios, React Query.",
     },
@@ -165,7 +167,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   languages: [
     {
       title: "Languages Known",
-      url: "http://localhost:3001/languages",
+      url: `${base_url}/languages`,
       description: "English, Hindi, Malayalam.",
     },
   ],
@@ -174,7 +176,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   contact: [
     {
       title: "Contact Muhammed Safvan",
-      url: "http://localhost:3001/contact",
+      url: `${base_url}/contact`,
       description:
         "Email: mskvphed@gmail.com | Phone: +91-7034359330 | Portfolio available online.",
     },
