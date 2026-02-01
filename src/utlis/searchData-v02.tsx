@@ -59,7 +59,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   about: [
     {
       title: "Muhammed Safvan Kv - Full Stack Developer",
-      url: `${base_url}/about`,
+      url: `/about`,
       description:
         "Full Stack Developer specializing in React, Next.js, Node.js, MongoDB, Tailwind CSS and scalable web applications.",
     },
@@ -69,19 +69,19 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   skills: [
     {
       title: "Technical Skills - MERN Stack Developer",
-      url: `${base_url}/skills`,
+      url: `/skills`,
       description:
         "React, Next.js, Node.js, Express.js, MongoDB, Tailwind CSS, TypeScript, Redux Toolkit, React Query, MUI, Radix UI.",
     },
     {
       title: "Frontend Technologies",
-      url: `${base_url}/skills/frontend`,
+      url: `/skills/frontend`,
       description:
         "React.js, Next.js, HTML5, CSS3, Tailwind CSS, Bootstrap, ShadCN UI, Material UI.",
     },
     {
       title: "Backend Technologies",
-      url: `${base_url}/skills/backend`,
+      url: `/skills/backend`,
       description:
         "Node.js, Express.js, MongoDB, REST APIs, Authentication (NextAuth), Razorpay integration.",
     },
@@ -119,19 +119,19 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   experience: [
     {
       title: "Full Stack Developer - Haash Technologies Pvt Ltd",
-      url: `${base_url}/experience`,
+      url: `/experience`,
       description:
         "Working as Full Stack Developer (2024 - Present) handling React, Next.js, Node.js and frontend/backend architecture.",
     },
     {
       title: "Internship - Self Stack (Hilite Business Park)",
-      url: `${base_url}/experience/internship`,
+      url: `/experience/internship`,
       description:
         "MERN Stack Internship (2023 - 2024) working with React.js, Node.js, MongoDB and Express.",
     },
     {
       title: "Tool Maker - Tesin Products Pvt Ltd",
-      url: `${base_url}/experience/non-it`,
+      url: `/experience/non-it`,
       description:
         "Worked as Tool Maker and Quality Engineer (2022 - 2023) before transitioning into IT industry.",
     },
@@ -141,13 +141,13 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   education: [
     {
       title: "MERN Full Stack Development - Self Stack Kerala",
-      url: `${base_url}/education`,
+      url: `/education`,
       description:
         "Completed MERN Full Stack Development course (2023 - 2024) at Hilite Business Park, Kerala.",
     },
     {
       title: "Tool and Die Engineering - AWH Engineering College",
-      url: "${base_url}/education/engineering",
+      url: "/education/engineering",
       description:
         "Completed Tool and Die Engineering in 2022 before entering software development career.",
     },
@@ -157,7 +157,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   tools: [
     {
       title: "Development Tools & Libraries",
-      url: `${base_url}/tools`,
+      url: `/tools`,
       description:
         "Git, GitHub, Vite, ShadCN UI, Material UI, Redux Toolkit, React Hook Form, Yup, Axios, React Query.",
     },
@@ -167,7 +167,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   languages: [
     {
       title: "Languages Known",
-      url: `${base_url}/languages`,
+      url: `/languages`,
       description: "English, Hindi, Malayalam.",
     },
   ],
@@ -176,7 +176,7 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
   contact: [
     {
       title: "Contact Muhammed Safvan",
-      url: `${base_url}/contact`,
+      url: `/contact`,
       description:
         "Email: mskvphed@gmail.com | Phone: +91-7034359330 | Portfolio available online.",
     },
