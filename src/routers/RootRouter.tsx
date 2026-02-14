@@ -21,10 +21,11 @@ const rootRouter = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+
     children: [
       {
         path: "/",
-        index: true,
+        // index: true,
         element: (
           <Suspense>
             <MainHomeContainer />
@@ -69,6 +70,7 @@ const rootRouter = createBrowserRouter([
       },
     ],
   },
+  
 ]);
 
 export default rootRouter;
