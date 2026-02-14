@@ -1,38 +1,38 @@
 import { IconCloudSection } from "@/components/Cloud/Icon-Cloud";
 import PagesLayouts from "@/layouts/PagesLayouts";
-import { FaReact, FaNodeJs, FaDatabase } from "react-icons/fa";
+import { FaReact, FaNodeJs } from "react-icons/fa";
 import { SiMongodb, SiExpress, SiTypescript } from "react-icons/si";
 
 const skills = [
   {
     name: "React.js",
     icon: <FaReact size={28} />,
-    iconColor:"text-pink-600",
+    iconColor: "text-pink-600",
     description:
       "Building interactive UI with hooks, context, and reusable components.",
   },
   {
     name: "Node.js",
     icon: <FaNodeJs size={28} />,
-    iconColor:"text-green-600",
+    iconColor: "text-green-600",
     description: "REST APIs, authentication, scalable backend architecture.",
   },
   {
     name: "Express.js",
     icon: <SiExpress size={28} />,
-    iconColor:"text-yellow-700",
+    iconColor: "text-yellow-700",
     description: "Middleware, routing, JWT authentication.",
   },
   {
     name: "MongoDB",
     icon: <SiMongodb size={28} />,
-    iconColor:"text-green-700",
+    iconColor: "text-green-700",
     description: "Schema design, aggregation, optimized queries.",
   },
   {
     name: "TypeScript",
     icon: <SiTypescript size={28} />,
-    iconColor:"text-blue-500",
+    iconColor: "text-blue-500",
     description: "Strong typing for scalable and maintainable applications.",
   },
 ];
