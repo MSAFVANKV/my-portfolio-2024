@@ -62,9 +62,15 @@ const AuthorizeSecLeft_V02 = ({ SEARCH_RESULTS }: Props) => {
       <div className="flex flex-col gap-8">
         {paginatedResults.map((item, index) => {
           const external = isExternal(item.url);
+          const directUrl =
+            !item.url.startsWith("http") || !item.url.startsWith("https")
+              ? window.origin + item.url
+              : item.url;
           return (
             <div key={index} className="flex flex-col gap-1 border-b pb-3">
-              <span className="text-sm text-gray-500 truncate">{item.url}</span>
+              <span className="text-sm text-gray-500 truncate">
+                {directUrl}
+              </span>
 
               {external ? (
                 <Link

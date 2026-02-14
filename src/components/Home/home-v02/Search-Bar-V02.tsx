@@ -134,7 +134,7 @@ const SearchBarV02 = () => {
       (!query.trim() && history.length > 0));
 
   return (
-    <div ref={wrapperRef} className="relative sm:w-3/4">
+    <div ref={wrapperRef} className="relative sm:w-3/4 w-full">
       {/* Search Bar */}
       <div className="h-12 rounded-full shadow-[0px_0px_9px_0px_#00000024] flex items-center px-4 bg-white">
         <CiSearch className="text-xl text-gray-500" />

@@ -43,6 +43,12 @@ export const useSearchDataV02 = (): SearchItem[] => {
       redirect: "/contact",
       callAgain: true,
     },
+    {
+      title: "Skills",
+      keywords: ["Skills", "skill", "powers", "knowledge"],
+      redirect: "/skills",
+      callAgain: true,
+    },
   ];
 };
 

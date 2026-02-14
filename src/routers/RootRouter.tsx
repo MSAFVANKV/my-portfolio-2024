@@ -10,6 +10,11 @@ import ErrorPage from "@/pages/system/ErrorPage";
 import NotFoundPage from "@/pages/system/NotFoundPage";
 import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import MernSkillsPage from "@/pages/skills/skills-page";
+import FrontendSkills from "@/pages/frontend/frontend-skills-page";
+import BackendSkills from "@/pages/backend/backend-skill-page";
+import ContactPage from "@/pages/contact/page";
+import PagesLayouts from "@/layouts/PagesLayouts";
 
 const rootRouter = createBrowserRouter([
   {
@@ -19,6 +24,7 @@ const rootRouter = createBrowserRouter([
     children: [
       {
         path: "/",
+        index: true,
         element: (
           <Suspense>
             <MainHomeContainer />
@@ -31,7 +37,31 @@ const rootRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <AboutMe_V02 />,
+        element: (
+          <PagesLayouts>
+            <AboutMe_V02 />
+          </PagesLayouts>
+        ),
+      },
+      {
+        path: "skills",
+        element: <MernSkillsPage />,
+      },
+      {
+        path: "contact",
+        element: (
+          <PagesLayouts>
+            <ContactPage />
+          </PagesLayouts>
+        ),
+      },
+      {
+        path: "skills/frontend",
+        element: <FrontendSkills />,
+      },
+      {
+        path: "skills/backend",
+        element: <BackendSkills />,
       },
       {
         path: "*",

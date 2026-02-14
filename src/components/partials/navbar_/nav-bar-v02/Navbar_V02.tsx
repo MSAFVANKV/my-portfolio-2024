@@ -68,6 +68,7 @@ const Navbar_V02 = () => {
             </div>
           )}
         </header>
+       
 
         {/* ================= SUB NAVBAR ================= */}
         {isLoggedIn && <SubNavbarV02 />}

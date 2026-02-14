@@ -90,7 +90,7 @@ const AuthorizeSecRight_V02 = () => {
           Technical Skills
         </div>
 
-        <div className="text-sm text-neutral-300 space-y-1">
+        <div className="text-sm text-neutral-500 space-y-1">
           <p>• React.js / Next.js</p>
           <p>• Node.js / Express.js</p>
           <p>• MongoDB</p>

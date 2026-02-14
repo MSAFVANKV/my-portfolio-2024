@@ -4,7 +4,7 @@ import AuthorizeSecRight_V02 from "@/components/Home/home-v02/authorize-sec-righ
 
 const AboutMe_V02 = () => {
   return (
-    <div className="pt-[150px]">
+    <div className="">
       <AuthorizeSecRight_V02 />
     </div>
   );

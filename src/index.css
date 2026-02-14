@@ -10,6 +10,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -38,6 +39,7 @@
   }
 
   .dark {
+    color-scheme: dark;
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -70,11 +72,19 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 @layer base {
   * {
     @apply border-border m-0 p-0;
   }
   body {
+    background-color: #ffffff;
+    color: #0a0a0a;
     @apply bg-background text-foreground; /* Apply the background and text colors */
     box-sizing: border-box;
   }
