@@ -22,7 +22,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/portfolio-safvan/",
+  base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -41,8 +41,8 @@ export default defineConfig({
     },
   },
 
-  server: {
-    port: 3001,
-    strictPort: true,
-  },
+  // server: {
+  //   port: 3001,
+  //   strictPort: true,
+  // },
 });
