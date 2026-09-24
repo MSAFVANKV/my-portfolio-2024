@@ -15,6 +15,7 @@ import FrontendSkills from "@/pages/frontend/frontend-skills-page";
 import BackendSkills from "@/pages/backend/backend-skill-page";
 import ContactPage from "@/pages/contact/page";
 import PagesLayouts from "@/layouts/PagesLayouts";
+import TimeRunnerV02 from "@/pages/timer/TimerPage.tsx";
 
 const rootRouter = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const rootRouter = createBrowserRouter([
       {
         path: "/preview",
         element: <PreviewPage />,
+      },
+      {
+        path: "/timer",
+        element: <TimeRunnerV02 />,
       },
       {
         path: "/about",
@@ -70,7 +75,6 @@ const rootRouter = createBrowserRouter([
       },
     ],
   },
-  
 ]);
 
 export default rootRouter;
