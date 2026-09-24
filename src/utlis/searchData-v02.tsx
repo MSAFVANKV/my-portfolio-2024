@@ -30,6 +30,12 @@ export const useSearchDataV02 = (): SearchItem[] => {
       callAgain: true,
     },
     {
+      title: "Timer",
+      keywords: ["timer", "clock", "time"],
+      redirect: "/timer",
+      callAgain: true,
+    },
+    {
       title: "Login",
       keywords: ["login", "signin", "auth"],
       action: () => {
@@ -118,6 +124,12 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
       url: "https://haash.tech",
       description:
         "React.js/Vite based portfolio website for Haash Technologies Pvt. Ltd.",
+    },
+    {
+      title: "Muhammed Safvan Kv - Timer App",
+      url: `/timer`,
+      description:
+        "React.js + TypeScript timer app with start, pause, reset, and save features. Built for productivity and time management.",
     },
   ],
 
