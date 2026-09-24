@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 // Types
 type Session = {
@@ -29,10 +29,10 @@ const LiveOfficeClock = () => {
 
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const city =
-    timeZone === "Asia/Kolkata" || timeZone === "Asia/Calcutta"
-      ? "India"
-      : timeZone.split("/").pop()?.replace(/_/g, " ") || timeZone;
+//   const city =
+//     timeZone === "Asia/Kolkata" || timeZone === "Asia/Calcutta"
+//       ? "India"
+//       : timeZone.split("/").pop()?.replace(/_/g, " ") || timeZone;
 
   // Update clock every second
   useEffect(() => {
