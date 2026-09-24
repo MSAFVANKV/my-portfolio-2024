@@ -37,10 +37,7 @@ const rootRouter = createBrowserRouter([
         path: "/preview",
         element: <PreviewPage />,
       },
-      {
-        path: "/timer",
-        element: <TimeRunnerV02 />,
-      },
+
       {
         path: "/about",
         element: (
@@ -60,6 +57,10 @@ const rootRouter = createBrowserRouter([
             <ContactPage />
           </PagesLayouts>
         ),
+      },
+      {
+        path: "timer",
+        element: <TimeRunnerV02 />,
       },
       {
         path: "skills/frontend",
