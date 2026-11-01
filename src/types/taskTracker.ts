@@ -33,7 +33,6 @@ export interface ITaskTrackerField {
 
   /**
    * System fields are not shown in the create/edit form.
-   * Example: submittedAt
    */
   system?: boolean;
 
@@ -41,6 +40,11 @@ export interface ITaskTrackerField {
    * Show this field in the table.
    */
   table?: boolean;
+
+  /**
+   * Show this field in the create/edit form.
+   */
+  form?: boolean;
 }
 
 export interface ITaskTrackerSchema {
@@ -52,18 +56,13 @@ export interface ITaskTrackerSchema {
 }
 
 export interface IWorkEntryType {
-  row?: number;
+  /**
+   * Actual Google Sheet row number.
+   */
+  row: number;
 
   /**
    * Dynamic values returned from Google Apps Script.
-   *
-   * Example:
-   * {
-   *   date: "2026-11-01",
-   *   project: "Travalet",
-   *   task: "Fixed login",
-   *   customer: "ABC"
-   * }
    */
   values: Record<string, unknown>;
 

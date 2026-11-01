@@ -15,7 +15,7 @@ function App() {
           {/* <NavbarMainContainer /> */}
 
           {/* MAIN CONTENT SECTION */}
-          <main className="section_container ">
+          <main className=" sm:px-10 px-5">
             <MainLayout>
               <Outlet />
               <Toaster />

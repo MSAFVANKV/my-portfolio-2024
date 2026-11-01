@@ -19,6 +19,7 @@ type GenericResponse = {
   success: boolean;
   message?: string;
   error?: string;
+  deleted?: number;
 };
 
 function createJsonpRequest<T>(
@@ -37,6 +38,8 @@ function createJsonpRequest<T>(
       callback: callbackName,
     });
 
+    let timeout: number;
+
     const cleanup = () => {
       window.clearTimeout(timeout);
 
@@ -45,7 +48,7 @@ function createJsonpRequest<T>(
       script.remove();
     };
 
-    const timeout = window.setTimeout(() => {
+    timeout = window.setTimeout(() => {
       cleanup();
 
       reject(
@@ -78,6 +81,7 @@ function createJsonpRequest<T>(
  * GET DYNAMIC SCHEMA
  * ============================
  */
+
 export async function getScriptSchema(
   googleScriptUrl: string,
 ): Promise<ITaskTrackerSchema> {
@@ -96,18 +100,6 @@ export async function getScriptSchema(
     );
   }
 
-  // IMPORTANT:
-  // Apps Script returns:
-  //
-  // {
-  //   success: true,
-  //   data: {
-  //     title: "...",
-  //     fields: [...]
-  //   }
-  // }
-  //
-  // So the schema is inside response.data.
   if (
     !response.data ||
     !Array.isArray(response.data.fields) ||
@@ -124,6 +116,7 @@ export async function getScriptSchema(
  * GET WORK ENTRIES
  * ============================
  */
+
 export async function getWorkEntries(
   googleScriptUrl: string,
 ): Promise<IWorkEntryType[]> {
@@ -147,11 +140,8 @@ export async function getWorkEntries(
  * ============================
  * CREATE / UPDATE
  * ============================
- *
- * We intentionally use no-cors here because
- * Apps Script POST responses cannot be reliably
- * read by the browser in this setup.
  */
+
 export async function saveWorkEntry(
   googleScriptUrl: string,
   values: Record<string, unknown>,
@@ -183,13 +173,18 @@ export async function saveWorkEntry(
 
 /**
  * ============================
- * DELETE
+ * SINGLE DELETE
  * ============================
  */
+
 export async function deleteWorkEntry(
   googleScriptUrl: string,
   row: number,
 ): Promise<void> {
+  if (!Number.isInteger(row) || row <= 0) {
+    throw new Error("Invalid row number.");
+  }
+
   const response = await createJsonpRequest<GenericResponse>(googleScriptUrl, {
     action: "delete",
     row: String(row),
@@ -200,4 +195,42 @@ export async function deleteWorkEntry(
       response.message || response.error || "Failed to delete work entry.",
     );
   }
+}
+
+/**
+ * ============================
+ * MULTIPLE DELETE
+ * ============================
+ */
+
+export async function deleteMultipleWorkEntries(
+  googleScriptUrl: string,
+  rows: number[],
+): Promise<number> {
+  if (!Array.isArray(rows) || rows.length === 0) {
+    throw new Error("No rows selected.");
+  }
+
+  const validRows = rows.filter((row) => Number.isInteger(row) && row > 0);
+
+  if (validRows.length === 0) {
+    throw new Error("No valid rows selected.");
+  }
+
+  const uniqueRows = [...new Set(validRows)];
+
+  const response = await createJsonpRequest<GenericResponse>(googleScriptUrl, {
+    action: "deleteMultiple",
+    rows: JSON.stringify(uniqueRows),
+  });
+
+  if (!response.success) {
+    throw new Error(
+      response.message ||
+        response.error ||
+        "Failed to delete selected work entries.",
+    );
+  }
+
+  return response.deleted ?? uniqueRows.length;
 }

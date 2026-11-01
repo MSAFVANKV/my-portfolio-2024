@@ -396,6 +396,7 @@ function DailyWorkTrackerPage({}: Props) {
       {!schemaLoading && (
         <WorkEntriesTable
           setEditData={handleEditDataChange}
+          isEdit={isEditing}
           googleScriptUrl={googleScriptUrl}
           googleSheetUrl={googleSheetUrl}
           schema={schema}

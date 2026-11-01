@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Pencil, RefreshCw, Trash2 } from "lucide-react";
 
+import { MdCancel } from "react-icons/md";
+
 import {
   ITaskTrackerField,
   ITaskTrackerSchema,
@@ -9,45 +11,35 @@ import {
 } from "@/types/taskTracker";
 
 import {
+  deleteMultipleWorkEntries,
   deleteWorkEntry,
   getWorkEntries,
 } from "@/services/spread-sheet/taskTrackerApi";
 
 import MyClock from "../global/clock";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+
 import { RiFileExcel2Fill } from "react-icons/ri";
 
 type Props = {
   setEditData: (data: IWorkEntryType | null) => void;
 
+  isEdit?: boolean;
+
   googleScriptUrl: string;
+
   googleSheetUrl: string;
 
   schema: ITaskTrackerSchema;
 };
 
 /**
- * Convert any Google Script response into the
- * structure expected by the React application.
- *
- * Supports both:
- *
- * NEW:
- * {
- *   row: 8,
- *   values: {
- *     date: "...",
- *     project: "..."
- *   }
- * }
- *
- * OLD:
- * {
- *   row: 8,
- *   date: "...",
- *   project: "..."
- * }
+ * ============================
+ * NORMALIZE ENTRY
+ * ============================
  */
+
 function normalizeEntry(
   rawEntry: unknown,
   schema: ITaskTrackerSchema,
@@ -79,8 +71,7 @@ function normalizeEntry(
     };
   } else {
     /**
-     * Backward compatibility with the old
-     * flat Apps Script response.
+     * Backward compatibility.
      */
     schema.fields.forEach((field) => {
       if (field.key in raw) {
@@ -91,9 +82,6 @@ function normalizeEntry(
 
   /**
    * Make sure every schema field exists.
-   *
-   * This prevents undefined-related crashes
-   * when the Sheet does not contain a value.
    */
   schema.fields.forEach((field) => {
     if (!(field.key in values)) {
@@ -112,6 +100,7 @@ const WorkEntriesTable = ({
   googleScriptUrl,
   googleSheetUrl,
   schema,
+  isEdit,
 }: Props) => {
   const [entries, setEntries] = useState<IWorkEntryType[]>([]);
 
@@ -119,11 +108,24 @@ const WorkEntriesTable = ({
 
   const [error, setError] = useState("");
 
+  /**
+   * Single delete loading.
+   */
   const [deletingRow, setDeletingRow] = useState<number | null>(null);
 
   /**
+   * Multiple delete loading.
+   */
+  const [deletingMultiple, setDeletingMultiple] = useState(false);
+
+  /**
+   * Selected rows.
+   */
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+
+  /**
    * ============================
-   * SAFE TABLE FIELDS
+   * TABLE FIELDS
    * ============================
    */
 
@@ -162,17 +164,10 @@ const WorkEntriesTable = ({
 
       const data = await getWorkEntries(googleScriptUrl);
 
-      /**
-       * API should return an array.
-       */
       if (!Array.isArray(data)) {
         throw new Error("Google Script returned invalid work entries data.");
       }
 
-      /**
-       * Normalize every entry and remove
-       * malformed rows instead of crashing.
-       */
       const normalizedEntries = data
         .map((entry) => normalizeEntry(entry, schema))
         .filter((entry): entry is IWorkEntryType => entry !== null);
@@ -180,9 +175,11 @@ const WorkEntriesTable = ({
       setEntries(normalizedEntries);
 
       /**
-       * If Google Script returned rows but
-       * every row was malformed, show a useful error.
+       * Clear selections whenever
+       * fresh data is loaded.
        */
+      setSelectedRows(new Set());
+
       if (data.length > 0 && normalizedEntries.length === 0) {
         setError(
           "Google Script returned work entries, but their data format is invalid.",
@@ -192,6 +189,8 @@ const WorkEntriesTable = ({
       console.error("Failed to load work entries:", error);
 
       setEntries([]);
+
+      setSelectedRows(new Set());
 
       setError(
         error instanceof Error ? error.message : "Failed to load work entries.",
@@ -207,7 +206,64 @@ const WorkEntriesTable = ({
 
   /**
    * ============================
-   * DELETE
+   * SELECTION
+   * ============================
+   */
+
+  const entryRows = useMemo(
+    () =>
+      entries
+        .map((entry) => entry.row)
+        .filter((row) => Number.isInteger(row) && row > 0),
+    [entries],
+  );
+
+  const allSelected =
+    entryRows.length > 0 && entryRows.every((row) => selectedRows.has(row));
+
+  const someSelected =
+    entryRows.some((row) => selectedRows.has(row)) && !allSelected;
+
+  /**
+   * Select / unselect one row.
+   */
+  const toggleRowSelection = (row: number) => {
+    setSelectedRows((previous) => {
+      const next = new Set(previous);
+
+      if (next.has(row)) {
+        next.delete(row);
+      } else {
+        next.add(row);
+      }
+
+      return next;
+    });
+  };
+
+  /**
+   * Select / unselect all.
+   */
+  const toggleSelectAll = () => {
+    setSelectedRows(() => {
+      /**
+       * If everything is selected,
+       * clear everything.
+       */
+      if (allSelected) {
+        return new Set();
+      }
+
+      /**
+       * Otherwise select all rows.
+       */
+      return new Set(entryRows);
+    });
+  };
+
+  /**
+   * ============================
+   * SINGLE DELETE
    * ============================
    */
 
@@ -227,10 +283,13 @@ const WorkEntriesTable = ({
     }
 
     /**
-     * Safely get a useful name for confirmation.
+     * Store row in a local constant.
      *
-     * No hard dependency on "task".
+     * This also guarantees TypeScript
+     * sees it as a number.
      */
+    const row = entry.row;
+
     const values = entry.values || {};
 
     const possibleDisplayFields = [
@@ -240,6 +299,7 @@ const WorkEntriesTable = ({
       "description",
       "project",
       "customer",
+      "work",
     ];
 
     let displayValue = "this work entry";
@@ -257,10 +317,6 @@ const WorkEntriesTable = ({
       }
     }
 
-    /**
-     * If none of the common fields exist,
-     * use the first available value dynamically.
-     */
     if (displayValue === "this work entry") {
       const firstValue = Object.values(values).find(
         (value) =>
@@ -281,21 +337,15 @@ const WorkEntriesTable = ({
     }
 
     try {
-      setDeletingRow(entry.row);
+      setDeletingRow(row);
       setError("");
 
       if (!googleScriptUrl?.trim()) {
         throw new Error("Google Apps Script URL is not configured.");
       }
 
-      await deleteWorkEntry(googleScriptUrl, entry.row);
+      await deleteWorkEntry(googleScriptUrl, row);
 
-      /**
-       * Reload from Google Sheet.
-       *
-       * This also refreshes row numbers after
-       * Google Sheets deletes a row.
-       */
       await loadEntries();
 
       setEditData(null);
@@ -312,14 +362,84 @@ const WorkEntriesTable = ({
 
   /**
    * ============================
+   * MULTIPLE DELETE
+   * ============================
+   */
+
+  const handleDeleteSelected = async () => {
+    const rows = Array.from(selectedRows).filter(
+      (row) => Number.isInteger(row) && row > 0,
+    );
+
+    if (rows.length === 0) {
+      setError("Please select at least one work entry.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${rows.length} selected work ${
+        rows.length === 1 ? "entry" : "entries"
+      }?`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setDeletingMultiple(true);
+      setError("");
+
+      if (!googleScriptUrl?.trim()) {
+        throw new Error("Google Apps Script URL is not configured.");
+      }
+
+      /**
+       * Send actual Google Sheet row
+       * numbers to Apps Script.
+       *
+       * Apps Script deletes from bottom
+       * to top, so row shifting is safe.
+       */
+      await deleteMultipleWorkEntries(googleScriptUrl, rows);
+
+      /**
+       * Clear selection immediately.
+       */
+      setSelectedRows(new Set());
+
+      /**
+       * Reload Google Sheet data.
+       *
+       * This also gets the new sequential
+       * SI NO values.
+       */
+      await loadEntries();
+
+      /**
+       * Exit edit mode if needed.
+       */
+      setEditData(null);
+    } catch (error) {
+      console.error("Failed to delete selected work entries:", error);
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to delete selected work entries.",
+      );
+    } finally {
+      setDeletingMultiple(false);
+    }
+  };
+
+  /**
+   * ============================
    * FORMAT VALUE
    * ============================
    */
 
   function formatValue(field: ITaskTrackerField, value: unknown) {
-    /**
-     * Empty / missing value.
-     */
     if (value === undefined || value === null || String(value).trim() === "") {
       return "-";
     }
@@ -344,9 +464,6 @@ const WorkEntriesTable = ({
           </a>
         );
       } catch {
-        /**
-         * Do not crash because of an invalid URL.
-         */
         return (
           <span className="truncate" title={url}>
             {url}
@@ -383,33 +500,48 @@ const WorkEntriesTable = ({
         <MyClock
           date={dateValue}
           showTime={false}
-          className="text-xs text-slate-700"
+          className="text-[11px] text-slate-600"
         />
       );
     }
 
     /**
-     * These are only visual enhancements.
-     *
-     * They do NOT affect the dynamic schema.
+     * Visual priority badge.
      */
     if (field.key === "priority") {
       return <PriorityBadge priority={String(value)} />;
     }
 
+    /**
+     * Visual status badge.
+     */
     if (field.key === "status") {
       return <StatusBadge status={String(value)} />;
     }
 
-    /**
-     * Default
-     */
     return String(value);
   }
 
   /**
    * ============================
-   * SAFE GOOGLE SHEET OPEN
+   * EDIT
+   * ============================
+   */
+
+  const handleEditDataChange = (data: IWorkEntryType | null) => {
+    setEditData(data);
+
+    if (data) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  /**
+   * ============================
+   * OPEN GOOGLE SHEET
    * ============================
    */
 
@@ -442,24 +574,25 @@ const WorkEntriesTable = ({
     <section className="mt-8 space-y-3 overflow-hidden">
       {/* HEADER */}
 
-      <div className="flex items-center sm:gap-3">
+      <div className="flex flex-wrap items-center gap-2">
         <Button
           type="button"
           onClick={loadEntries}
-          disabled={loading}
-          className="max-sm:w-1/2 max-sm:rounded-none"
+          disabled={loading || deletingMultiple}
+          className="h-9 gap-1.5 px-3 text-sm"
         >
-          <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           Refresh
         </Button>
 
         <Button
           type="button"
           aria-label="Open Google Sheet"
-          className="flex items-center gap-1 bg-green-700 max-sm:w-1/2 max-sm:rounded-none"
+          className="h-9 gap-1.5 bg-green-700 px-3 text-sm hover:bg-green-800"
           onClick={handleOpenSheet}
+          disabled={deletingMultiple}
         >
-          <RiFileExcel2Fill />
+          <RiFileExcel2Fill size={15} />
           Sheet
         </Button>
       </div>
@@ -497,21 +630,42 @@ const WorkEntriesTable = ({
       {/* TABLE */}
 
       {!loading && !error && entries.length > 0 && tableFields.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-[1200px] w-full text-left text-sm">
-              <thead className="bg-slate-50">
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="max-h-[calc(100vh-280px)] overflow-auto">
+            <table className="min-w-[1100px] w-full table-auto text-left text-xs">
+              <thead className="sticky top-0 z-20 bg-slate-50/95 backdrop-blur-sm">
                 <tr className="border-b border-slate-200">
+                  {/* SELECT ALL */}
+
+                  <th className="sticky left-0 z-30 w-10 bg-slate-50/95 px-2 py-2">
+                    <Checkbox
+                      checked={
+                        allSelected
+                          ? true
+                          : someSelected
+                            ? "indeterminate"
+                            : false
+                      }
+                      onCheckedChange={toggleSelectAll}
+                      disabled={deletingMultiple}
+                      aria-label="Select all work entries"
+                    />
+                  </th>
+
+                  {/* DYNAMIC FIELDS */}
+
                   {tableFields.map((field) => (
                     <th
                       key={field.key}
-                      className="whitespace-nowrap px-5 py-3 font-semibold text-slate-600"
+                      className="whitespace-nowrap px-3 py-2 font-semibold text-[11px] uppercase tracking-wide text-slate-500"
                     >
                       {field.label}
                     </th>
                   ))}
 
-                  <th className="whitespace-nowrap px-5 py-3 font-semibold text-slate-600">
+                  {/* ACTION */}
+
+                  <th className="whitespace-nowrap px-3 py-2 font-semibold text-[11px] uppercase tracking-wide text-slate-500">
                     Action
                   </th>
                 </tr>
@@ -525,50 +679,69 @@ const WorkEntriesTable = ({
 
                   const isDeleting = deletingRow === entry.row;
 
+                  const isSelected = selectedRows.has(entry.row);
+
                   return (
                     <tr
                       key={`${entry.row}-${index}`}
-                      className="border-b border-slate-100 last:border-0 hover:bg-slate-50"
+                      className={`border-b border-slate-100 last:border-0 transition-colors ${
+                        isSelected ? "bg-blue-50/70" : "hover:bg-slate-50"
+                      }`}
                     >
+                      {/* ROW CHECKBOX */}
+
+                      <td className="w-10 px-2 py-2 align-middle">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => toggleRowSelection(entry.row)}
+                          disabled={isDeleting || deletingMultiple}
+                          aria-label={`Select row ${entry.row}`}
+                        />
+                      </td>
+
+                      {/* DYNAMIC FIELDS */}
+
                       {tableFields.map((field) => (
                         <td
                           key={`${entry.row}-${field.key}`}
-                          className="max-w-80 px-5 py-4 text-slate-700"
+                          className="max-w-64 px-3 py-2 align-middle text-xs leading-4 text-slate-700"
                         >
                           {formatValue(field, entry.values?.[field.key])}
                         </td>
                       ))}
 
-                      <td className="whitespace-nowrap px-5 py-4">
+                      {/* ACTION */}
+
+                      <td className="whitespace-nowrap px-3 py-2 align-middle">
                         <div className="flex items-center gap-2">
                           {/* EDIT */}
 
                           <button
                             type="button"
-                            onClick={() => {
-                              if (!entry.values) {
-                                setError(
-                                  "This work entry does not contain valid values.",
-                                );
-                                return;
-                              }
-
-                              setEditData(entry);
-                            }}
-                            disabled={isDeleting}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-600 transition hover:bg-blue-100 disabled:opacity-50"
+                            onClick={() => handleEditDataChange(entry)}
+                            disabled={isDeleting || deletingMultiple}
+                            className="inline-flex h-7 items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 text-[11px] font-medium text-blue-600 transition hover:bg-blue-100 disabled:opacity-50"
                           >
-                            <Pencil size={14} />
-                            Edit
+                            {isEdit ? (
+                              <>
+                                <MdCancel />
+                                Cancel
+                              </>
+                            ) : (
+                              <>
+                                <Pencil size={14} />
+                                Edit
+                              </>
+                            )}
                           </button>
 
-                          {/* DELETE */}
+                          {/* SINGLE DELETE */}
 
                           <button
                             type="button"
                             onClick={() => handleDelete(entry)}
-                            disabled={isDeleting}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                            disabled={isDeleting || deletingMultiple}
+                            className="inline-flex h-7 items-center gap-1 rounded-md border border-red-200 bg-red-50 px-2 text-[11px] font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             <Trash2 size={14} />
 
@@ -598,6 +771,32 @@ const WorkEntriesTable = ({
               The configured Google Script returned an invalid or empty schema.
             </p>
           </div>
+        </div>
+      )}
+
+      {/* FLOATING BULK DELETE ACTION */}
+
+      {selectedRows.size > 0 && (
+        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-xl border border-slate-200 bg-white/95 px-3 py-2.5 shadow-xl backdrop-blur-md">
+          <div className="flex items-center gap-2 border-r border-slate-200 pr-3">
+            <span className="flex h-7 min-w-7 items-center justify-center rounded-full bg-slate-900 px-2 text-xs font-semibold text-white">
+              {selectedRows.size}
+            </span>
+
+            <span className="text-xs font-medium text-slate-600">selected</span>
+          </div>
+
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={handleDeleteSelected}
+            disabled={deletingMultiple || deletingRow !== null}
+            className="h-8 gap-1.5 rounded-md px-3 text-xs font-semibold shadow-sm"
+          >
+            <Trash2 size={14} />
+
+            {deletingMultiple ? "Deleting..." : "Delete Selected"}
+          </Button>
         </div>
       )}
     </section>
