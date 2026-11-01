@@ -16,6 +16,7 @@ import BackendSkills from "@/pages/backend/backend-skill-page";
 import ContactPage from "@/pages/contact/page";
 import PagesLayouts from "@/layouts/PagesLayouts";
 import TimeRunnerV02 from "@/pages/timer/TimerPage";
+import DailyWorkTrackerPage from "@/pages/dailyWork/dailyWorkTrackerPage";
 
 const rootRouter = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const rootRouter = createBrowserRouter([
       {
         path: "timer",
         element: <TimeRunnerV02 />,
+      },
+      {
+        path: "task-tracker",
+        element: <DailyWorkTrackerPage />,
       },
       {
         path: "skills/frontend",

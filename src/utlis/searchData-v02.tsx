@@ -36,6 +36,12 @@ export const useSearchDataV02 = (): SearchItem[] => {
       callAgain: true,
     },
     {
+      title: "Task Tracker",
+      keywords: ["task", "tracker", "work"],
+      redirect: "/task-tracker",
+      callAgain: true,
+    },
+    {
       title: "Login",
       keywords: ["login", "signin", "auth"],
       action: () => {
@@ -130,6 +136,12 @@ export const SEARCH_RESULTS: Record<string, SearchResultItem[]> = {
       url: `/timer`,
       description:
         "React.js + TypeScript timer app with start, pause, reset, and save features. Built for productivity and time management.",
+    },
+    {
+      title: "Muhammed Safvan Kv - Task Tracker",
+      url: `/task-tracker`,
+      description:
+        "React.js + TypeScript task tracker app to record daily tasks and track work progress. Built for productivity and organization.",
     },
   ],
 
