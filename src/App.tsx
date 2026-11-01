@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
 
 import "./App.css";
-import NavbarMainContainer from "./components/partials/navbar_/navbar-main";
 import TabBarMainContainer from "./components/partials/navbar_/tabbar-main-container";
 import { AuthProvider } from "./provider/context/AuthContext";
+import MainLayout from "./layouts/MainLayout";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
@@ -11,11 +12,14 @@ function App() {
       <div className="w-screen scrollbar-none">
         {/* NAVBAR SECTION */}
         <AuthProvider>
-          <NavbarMainContainer />
+          {/* <NavbarMainContainer /> */}
 
           {/* MAIN CONTENT SECTION */}
           <main className="section_container ">
-            <Outlet />
+            <MainLayout>
+              <Outlet />
+              <Toaster />
+            </MainLayout>
           </main>
           {/* tab bar section */}
           <TabBarMainContainer />
