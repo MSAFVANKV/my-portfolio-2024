@@ -89,6 +89,7 @@ function DailyWorkTrackerPage({}: Props) {
 
       try {
         const remoteSchema = await getScriptSchema(activeScriptUrl);
+        // console.log(remoteSchema, "remoteSchema");
 
         setSchema(remoteSchema);
       } catch (error) {
@@ -367,8 +368,12 @@ function DailyWorkTrackerPage({}: Props) {
 
         {!schemaLoading && (
           <p className="mt-2 text-xs text-slate-500">
-            Active schema: <strong>{schema.name || "Task Tracker"}</strong> ·{" "}
-            {schema.fields.filter((field) => !field.system).length} form fields
+            Active schema:{" "}
+            <strong>
+              {schema.title || schema.sheetName || schema.name || "Unknown"}
+            </strong>
+            · {schema.fields.filter((field) => !field.system).length} form
+            fields
           </p>
         )}
       </div>

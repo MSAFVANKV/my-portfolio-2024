@@ -49,6 +49,7 @@ export interface ITaskTrackerField {
 
 export interface ITaskTrackerSchema {
   name?: string;
+  title?: string;
   sheetName?: string;
   headerRow?: number;
   dataStartRow?: number;
