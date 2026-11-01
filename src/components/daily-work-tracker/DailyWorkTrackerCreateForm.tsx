@@ -65,17 +65,17 @@ function createInitialValues(schema: ITaskTrackerSchema): FormValues {
   return values;
 }
 
-function getInputValue(value: unknown): string | number {
-  if (value === null || value === undefined) {
-    return "";
-  }
+// function getInputValue(value: unknown): string | number {
+//   if (value === null || value === undefined) {
+//     return "";
+//   }
 
-  if (typeof value === "string" || typeof value === "number") {
-    return value;
-  }
+//   if (typeof value === "string" || typeof value === "number") {
+//     return value;
+//   }
 
-  return String(value);
-}
+//   return String(value);
+// }
 
 export default function DailyWorkTrackerForm({
   isEdit = false,
