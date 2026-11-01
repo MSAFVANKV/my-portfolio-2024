@@ -1,11 +1,10 @@
-// src/services/spread-sheet/taskTrackerApi.ts
-
 import { ITaskTrackerSchema, IWorkEntryType } from "@/types/taskTracker";
 
 type GetSchemaResponse = {
   success: boolean;
-  schema?: ITaskTrackerSchema;
+  data?: ITaskTrackerSchema;
   message?: string;
+  error?: string;
 };
 
 type GetEntriesResponse = {
@@ -13,11 +12,13 @@ type GetEntriesResponse = {
   data?: IWorkEntryType[];
   schema?: ITaskTrackerSchema;
   message?: string;
+  error?: string;
 };
 
 type GenericResponse = {
   success: boolean;
   message?: string;
+  error?: string;
 };
 
 function createJsonpRequest<T>(
@@ -77,7 +78,6 @@ function createJsonpRequest<T>(
  * GET DYNAMIC SCHEMA
  * ============================
  */
-
 export async function getScriptSchema(
   googleScriptUrl: string,
 ): Promise<ITaskTrackerSchema> {
@@ -89,14 +89,34 @@ export async function getScriptSchema(
   );
 
   if (!response.success) {
-    throw new Error(response.message || "Failed to load Google Script schema.");
+    throw new Error(
+      response.message ||
+        response.error ||
+        "Failed to load Google Script schema.",
+    );
   }
 
-  if (!response.schema?.fields?.length) {
+  // IMPORTANT:
+  // Apps Script returns:
+  //
+  // {
+  //   success: true,
+  //   data: {
+  //     title: "...",
+  //     fields: [...]
+  //   }
+  // }
+  //
+  // So the schema is inside response.data.
+  if (
+    !response.data ||
+    !Array.isArray(response.data.fields) ||
+    response.data.fields.length === 0
+  ) {
     throw new Error("Google Script returned an empty schema.");
   }
 
-  return response.schema;
+  return response.data;
 }
 
 /**
@@ -104,7 +124,6 @@ export async function getScriptSchema(
  * GET WORK ENTRIES
  * ============================
  */
-
 export async function getWorkEntries(
   googleScriptUrl: string,
 ): Promise<IWorkEntryType[]> {
@@ -116,7 +135,9 @@ export async function getWorkEntries(
   );
 
   if (!response.success) {
-    throw new Error(response.message || "Failed to load work entries.");
+    throw new Error(
+      response.message || response.error || "Failed to load work entries.",
+    );
   }
 
   return response.data || [];
@@ -131,7 +152,6 @@ export async function getWorkEntries(
  * Apps Script POST responses cannot be reliably
  * read by the browser in this setup.
  */
-
 export async function saveWorkEntry(
   googleScriptUrl: string,
   values: Record<string, unknown>,
@@ -166,7 +186,6 @@ export async function saveWorkEntry(
  * DELETE
  * ============================
  */
-
 export async function deleteWorkEntry(
   googleScriptUrl: string,
   row: number,
@@ -177,6 +196,8 @@ export async function deleteWorkEntry(
   });
 
   if (!response.success) {
-    throw new Error(response.message || "Failed to delete work entry.");
+    throw new Error(
+      response.message || response.error || "Failed to delete work entry.",
+    );
   }
 }

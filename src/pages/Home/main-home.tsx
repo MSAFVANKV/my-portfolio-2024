@@ -10,7 +10,7 @@ const MainHomeContainer = () => {
         return <HomeV01 />;
       case "V_02":
         return (
-          <div className="h-screen pt-[150px]">
+          <div className="h-screen">
             <HomeV02HomePage />
           </div>
         );
