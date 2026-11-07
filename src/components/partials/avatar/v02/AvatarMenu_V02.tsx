@@ -53,6 +53,7 @@ sm:w-[400px] overflow-auto bg-[#e9eef6] rounded-3xl shadow-2xl p-6 z-50 transiti
                     logout();
                   } else {
                     login();
+                    setOpen(false);
                   }
                 }}
                 className="p-3 bg-gray-100 rounded-xl hover:bg-gray-200 transition"
